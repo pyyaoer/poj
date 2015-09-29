@@ -26,6 +26,6 @@ int main(void){
 			break;
 		}
 		printf("%d\n", gen_next());
-		memset(str, sizeof(str), 0);
+		memset(str, 0, sizeof(str));
 	}
 }
