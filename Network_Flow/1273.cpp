@@ -9,19 +9,14 @@ using namespace std;
 
 struct Edge{
     int from, to, cap, flow;
-    Edge(int a, int b, int c, int d){
-        from = a;to = b;cap = c;flow = d;
-    }
 };
 
 vector<Edge> edges;
 vector<int> G[NODE_NUM];
 
 void insertEdge(int from, int to, int cap){
-    Edge e1(from,to,cap,0);
-    Edge e2(to,from,0,0);
-    edges.push_back(e1);
-    edges.push_back(e2);
+    edges.push_back((Edge){from, to, cap, 0});
+    edges.push_back((Edge){to, from, 0, 0});
     int m = (int)edges.size();
     G[from].push_back(m-2);
     G[to].push_back(m-1);
@@ -72,14 +67,21 @@ int DFS(int x, int a){
                 break;
         }
     }
+    if (flow == 0){
+        dis[x] = 0;
+    }
     return flow;
 }
 
 int nwFlow(){
     int flow = 0;
     while(BFS()){
-        memset(cur, 0, sizeof(cur));
-        flow += DFS(s, INF_NUM);
+        int fl = 1;
+        while(fl){
+            memset(cur, 0, sizeof(cur));
+            fl = DFS(s, INF_NUM);
+            flow += fl;
+        }
     }
     return flow;
 }

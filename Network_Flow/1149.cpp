@@ -72,14 +72,21 @@ int DFS(int x, int a){
                 break;
         }
     }
+    if (flow == 0){
+        dis[x] = 0;
+    }
     return flow;
 }
 
 int nwFlow(){
     int flow = 0;
     while(BFS()){
-        memset(cur, 0, sizeof(cur));
-        flow += DFS(s, INF_NUM);
+        int fl = 1;
+        while(fl){
+            memset(cur, 0, sizeof(cur));
+            fl = DFS(s, INF_NUM);
+            flow += fl;
+        }
     }
     return flow;
 }
